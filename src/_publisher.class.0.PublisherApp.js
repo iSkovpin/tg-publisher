@@ -7,7 +7,7 @@ class PublisherApp {
     }
 
     /**
-     * @param {Date} date
+     * @param {Date?} date
      */
     publishByDate(date) {
         if (date === undefined) {
@@ -38,6 +38,10 @@ class PublisherApp {
         }
     }
 
+    /**
+     * @param {string} msg
+     * @param {string?} type
+     */
     sendTelegramNotification(msg, type) {
         if (this.getConfig().get('telegramNotifications') === false) {
             return;
