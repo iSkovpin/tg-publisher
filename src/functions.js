@@ -59,6 +59,26 @@ function getCellUrl(range) {
 }
 
 /**
+ * @param {Date} date1
+ * @param {Date} date2
+ * @returns {boolean}
+ */
+function isSameDay(date1, date2) {
+    return date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear();
+}
+
+/**
+ * @param {Date} someDate
+ * @returns {boolean}
+ */
+function isToday(someDate) {
+    const today = new Date();
+    return isSameDay(someDate, today);
+}
+
+/**
  * @return {string}
  */
 String.prototype.capitalize = function () {
