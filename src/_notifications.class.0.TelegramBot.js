@@ -12,19 +12,26 @@ class TelegramBot {
      */
     sendMessage(msg) {
         let url = this.getSendMessageUrl();
+        let data = this.getDefaultRequestArgs();
+        let options = this.getDefaultRequestOptions();
 
-        let data = {
-            'chat_id': this.channelId,
-            'text': msg,
-            'disable_notification': this.getTimeAfterLastCall() < this.silentBuffer,
-            'parse_mode': 'HTML'
-        };
+        data.text = msg;
+        options.payload = JSON.stringify(data);
 
-        let options = {
-            'method': 'post',
-            'contentType': 'application/json',
-            'payload': JSON.stringify(data)
-        };
+        UrlFetchApp.fetch(url, options);
+        this.setLastCallTime();
+    }
+
+    /**
+     * @param {string} photoUrl
+     */
+    sendPhoto(photoUrl) {
+        let url = this.getSendPhotoUrl();
+        let data = this.getDefaultRequestArgs();
+        let options = this.getDefaultRequestOptions();
+
+        data.photo = photoUrl;
+        options.payload = JSON.stringify(data);
 
         UrlFetchApp.fetch(url, options);
         this.setLastCallTime();
@@ -42,6 +49,34 @@ class TelegramBot {
      */
     getSendMessageUrl() {
         return this.getBaseUrl() + '/sendMessage';
+    }
+
+    /**
+     * @returns {string}
+     */
+    getSendPhotoUrl() {
+        return this.getBaseUrl() + '/sendPhoto';
+    }
+
+    /**
+     * @returns {Object}
+     */
+    getDefaultRequestArgs() {
+        return {
+            'chat_id': this.channelId,
+            'disable_notification': this.getTimeAfterLastCall() < this.silentBuffer,
+            'parse_mode': 'HTML'
+        };
+    }
+
+    /**
+     * @returns {Object}
+     */
+    getDefaultRequestOptions() {
+        return {
+            'method': 'post',
+            'contentType': 'application/json',
+        };
     }
 
     /**
