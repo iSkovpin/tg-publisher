@@ -12,7 +12,7 @@ class PublishRecord extends DataRecord {
     }
 
     /**
-     * @return {string}
+     * @return {Date}
      */
     getDate() {
         return this.dateCell.getValue();
