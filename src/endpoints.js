@@ -1,0 +1,3 @@
+function publishToday() {
+    publisher.publishByDate();
+}

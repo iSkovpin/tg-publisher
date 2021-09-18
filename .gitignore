@@ -1,0 +1,5 @@
+.idea/
+src/.clasp.json
+src/_config.const.1.configDev.js
+src/_config.const.2.configProd.js
+node_modules/

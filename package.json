@@ -1,0 +1,12 @@
+{
+  "name": "google-apps-script-type-hinting",
+  "description": "Type-hinting fo Google Apps Script development in IntelliJ IDEA",
+  "author": {
+    "name": "Ivan Skovpin",
+    "email": "ivanskovpin@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.17"
+  }
+}
