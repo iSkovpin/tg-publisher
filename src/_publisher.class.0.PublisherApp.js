@@ -6,15 +6,16 @@ class PublisherApp {
         this.config = config;
     }
 
+    /**
+     * @param {Date} date
+     */
     publishByDate(date) {
         if (date === undefined) {
-            date = Utilities.formatDate(new Date(), this.getConfig().get('timezone'), this.getConfig().get('dateFormat'));
+            date = new Date();
         }
 
         let sheetInfo = this.getPublicationsSheetInfo();
-        // let sheet = sheetInfo.getSheet();
-
-        let row = 1;
+        let row = sheetInfo.firstDataRow - 1;
 
         while (true) {
             row++;
@@ -23,22 +24,37 @@ class PublisherApp {
             if (!record.isValid()) {
                 break;
             }
-            if (record.getDate() !== date) {
+            if (!isSameDay(date, record.getDate())) {
                 continue;
             }
 
-            this.sendTelegramNotification(record.getText());
+            if (record.getText()) {
+                this.sendTelegramNotification(record.getText(), 'text');
+            }
+
+            if (record.getImage()) {
+                this.sendTelegramNotification(record.getImage(), 'image');
+            }
         }
-
-
     }
 
-    sendTelegramNotification(msg) {
+    sendTelegramNotification(msg, type) {
         if (this.getConfig().get('telegramNotifications') === false) {
             return;
         }
 
-        this.getTelegramBot().sendMessage(msg);
+        if (type === undefined) {
+            type = 'text';
+        }
+        if (['text', 'image'].indexOf(type) === -1) {
+            throw 'Unknown telegram message type';
+        }
+
+        if (type === 'text') {
+            this.getTelegramBot().sendMessage(msg);
+        } else if (type === 'image') {
+            this.getTelegramBot().sendPhoto(msg);
+        }
     }
 
     /**
