@@ -9,6 +9,7 @@ class PublicationsSheetInfo extends SheetInfo {
         this.columnDate = this.config.columns.date;
         this.columnText = this.config.columns.text;
         this.columnImage = this.config.columns.image;
+        this.firstDataRow = this.config.rows.firstData;
     }
 
     /**

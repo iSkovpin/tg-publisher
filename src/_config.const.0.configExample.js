@@ -16,6 +16,9 @@ const configExample = {
                 text: 2,
                 image: 3,
             },
+            rows: {
+                firstData: 2,
+            },
         },
     }
 };
